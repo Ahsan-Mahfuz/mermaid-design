@@ -127,21 +127,27 @@ const AdminDashboard = () => {
   const handleShowMore = () => {
     navigate('/mermaids/client-management')
   }
+  const handleGoBack = () => {
+    window.history.back()
+  }
 
   return (
     <div>
-      <div className="bg-white flex items-center gap-3 p-2">
+      <div
+        className="bg-white flex items-center gap-3 p-2 cursor-pointer"
+        onClick={handleGoBack}
+      >
         <FaArrowLeft />
         <p className="text-xl">Admin Dashboard</p>
       </div>
 
       <div className="flex justify-between mt-5">
-        <div className="flex flex-col items-center justify-center bg-white w-[250px] p-4 font-bold gap-2 rounded">
+        <div className="flex flex-col items-center justify-center bg-white w-[310px] p-4 font-bold gap-2 rounded">
           <p>Total Clients</p>
           <img src="/clients.svg" alt="clients" className="w-[70px]" />
           <p>144061</p>
         </div>
-        <div className="flex flex-col items-center justify-center bg-white w-[250px] p-4 font-bold gap-2 rounded">
+        <div className="flex flex-col items-center justify-center bg-white w-[310px] p-4 font-bold gap-2 rounded">
           <p>Total Premium Clients</p>
           <img
             src="/premium clients.svg"
@@ -150,12 +156,12 @@ const AdminDashboard = () => {
           />
           <p>144061</p>
         </div>
-        <div className="flex flex-col items-center justify-center bg-white w-[250px] p-4 font-bold gap-2 rounded">
+        <div className="flex flex-col items-center justify-center bg-white w-[310px] p-4 font-bold gap-2 rounded">
           <p>Total Maids</p>
           <img src="/maids.svg" alt="maids" className="w-[70px]" />
           <p>144061</p>
         </div>
-        <div className="flex flex-col items-center justify-center bg-white w-[250px] p-4 font-bold gap-2 rounded">
+        <div className="flex flex-col items-center justify-center bg-white w-[310px] p-4 font-bold gap-2 rounded">
           <p>Total Premium Maids</p>
           <img
             src="/premium clients.svg"
@@ -164,7 +170,7 @@ const AdminDashboard = () => {
           />
           <p>144061</p>
         </div>
-        <div className="flex flex-col items-center justify-center bg-white w-[250px] p-4 font-bold gap-2 rounded">
+        <div className="flex flex-col items-center justify-center bg-white w-[310px] p-4 font-bold gap-2 rounded">
           <p>Total Earnings</p>
           <img src="/earnings.svg" alt="earnings" className="w-[70px]" />
           <p>144061</p>

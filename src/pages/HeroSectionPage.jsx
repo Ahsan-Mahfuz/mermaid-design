@@ -26,12 +26,11 @@ const headerStyle = {
   top: 0,
   width: '100vw',
   zIndex: 1000,
-  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
 }
 
 const siderStyle = {
   backgroundColor: '#fff',
-  height: '100vh',
+  minHeight: '100vh',
   paddingTop: 64,
   borderRight: '1px solid #f0f0f0',
 }

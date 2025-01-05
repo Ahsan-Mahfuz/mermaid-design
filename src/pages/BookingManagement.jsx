@@ -142,7 +142,7 @@ const columns = [
         {record.paymentMethod === 'Dollar' ? (
           <p>{record.price}</p>
         ) : (
-          <button className="flex items-center border border-gray-300 rounded-3xl px-2 py-1">
+          <button className="flex items-center border border-gray-300 rounded-3xl pr-2 pl-1 py-1">
             <img src="/mrmd token icon.svg" alt="Token" className="w-7 mr-2" />
             <p>{record.priceInTokens}</p>
           </button>

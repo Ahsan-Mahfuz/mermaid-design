@@ -1,8 +1,8 @@
 import { FaArrowLeft } from 'react-icons/fa6'
 import { Button, Card, Input, Space, Table } from 'antd'
+import { useState } from 'react'
 const { Search } = Input
 
-const onSearch = (value, _e, info) => console.log(info?.source, value)
 
 const data = [
   {
@@ -174,6 +174,15 @@ const disableProfile = (key) => {
   console.log(`Disabling profile with key: ${key}`)
 }
 const ClientManagement = () => {
+  const [filteredData, setFilteredData] = useState(data)
+
+  const onSearch = (value) => {
+    const filtered = data.filter((user) =>
+      user.userName.toLowerCase().includes(value.toLowerCase())
+    )
+    setFilteredData(filtered)
+  }
+
   return (
     <div>
       <div className="bg-white flex items-center p-2 justify-between">
@@ -197,7 +206,7 @@ const ClientManagement = () => {
       <Card bordered={true} style={{ marginTop: 16 }}>
         <Table
           columns={columns}
-          dataSource={data.filter((d) => d.joinAs == 'Client')}
+          dataSource={filteredData}
           pagination={{
             pageSize: 7,
           }}

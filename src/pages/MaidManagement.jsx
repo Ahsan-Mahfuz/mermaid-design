@@ -1,8 +1,7 @@
+import { useState } from 'react'
 import { FaArrowLeft } from 'react-icons/fa6'
 import { Button, Card, Input, Space, Table } from 'antd'
 const { Search } = Input
-
-const onSearch = (value, _e, info) => console.log(info?.source, value)
 
 const data = [
   {
@@ -11,104 +10,27 @@ const data = [
     userName: 'Md Mojahid Islam',
     email: 'Mojahid@gmail.com',
     location: 'San Francisco, United States',
-    joinAs: 'Client',
+    userRole: 'Maid',
+    service: ['Cleaning', 'Laundry', 'Cooking'],
+    verification: 'Verified',
     userType: 'Premium',
   },
   {
     key: '2',
-    image: 'https://randomuser.me/api/portraits/men/2.jpg',
-    userName: 'Md Mojahid Islam',
-    email: 'Mojahid@gmail.com',
+    image: 'https://randomuser.me/api/portraits/men/10.jpg',
+    userName: 'Md Ahsan Islam',
+    email: 'ahsan@gmail.com',
     location: 'San Francisco, United States',
-    joinAs: 'Client',
-    userType: 'Free',
-  },
-  {
-    key: '3',
-    image: 'https://randomuser.me/api/portraits/men/3.jpg',
-    userName: 'Jane Doe',
-    email: 'jane.doe@example.com',
-    location: 'New York, United States',
-    joinAs: 'Maid',
-    userType: 'Premium',
-  },
-  {
-    key: '4',
-    image: 'https://randomuser.me/api/portraits/men/4.jpg',
-    userName: 'John Smith',
-    email: 'john.smith@example.com',
-    location: 'Los Angeles, United States',
-    joinAs: 'Client',
-    userType: 'Free',
-  },
-  {
-    key: '5',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg',
-    userName: 'Alice Johnson',
-    email: 'alice.johnson@example.com',
-    location: 'Chicago, United States',
-    joinAs: 'Maid',
-    userType: 'Premium',
-  },
-  {
-    key: '6',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg',
-    userName: 'Alice Johnson',
-    email: 'alice.johnson@example.com',
-    location: 'Chicago, United States',
-    joinAs: 'Maid',
-    userType: 'Premium',
-  },
-  {
-    key: '7',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg',
-    userName: 'Alice Johnson',
-    email: 'alice.johnson@example.com',
-    location: 'Chicago, United States',
-    joinAs: 'Maid',
-    userType: 'Premium',
-  },
-  {
-    key: '8',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg',
-    userName: 'Alice Johnson',
-    email: 'alice.johnson@example.com',
-    location: 'Chicago, United States',
-    joinAs: 'Maid',
-    userType: 'Premium',
-  },
-  {
-    key: '9',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg',
-    userName: 'Alice Johnson',
-    email: 'alice.johnson@example.com',
-    location: 'Chicago, United States',
-    joinAs: 'Maid',
-    userType: 'Premium',
-  },
-  {
-    key: '10',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg',
-    userName: 'Alice Johnson',
-    email: 'alice.johnson@example.com',
-    location: 'Chicago, United States',
-    joinAs: 'Maid',
-    userType: 'Premium',
-  },
-  {
-    key: '11',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg',
-    userName: 'Alice Johnson',
-    email: 'alice.johnson@example.com',
-    location: 'Chicago, United States',
-    joinAs: 'Maid',
+    userRole: 'Maid',
+    service: ['Cleaning', 'Laundry', 'Cooking', 'Home Cleaning'],
+    verification: 'Incomplete',
     userType: 'Premium',
   },
 ]
 
 const columns = [
   {
-    title: 'Profile',
+    title: 'Image',
     dataIndex: 'image',
     key: 'image',
     render: (text) => (
@@ -131,9 +53,52 @@ const columns = [
     key: 'location',
   },
   {
-    title: 'Join As A',
-    dataIndex: 'joinAs',
-    key: 'joinAs',
+    title: 'User Role',
+    dataIndex: 'userRole',
+    key: 'userRole',
+  },
+  {
+    title: 'Service',
+    dataIndex: 'service',
+    key: 'service',
+    render: (services) => {
+      const visibleServices = services.slice(0, 2)
+      const hiddenServices = services.slice(2)
+
+      return (
+        <div>
+          <div className="flex gap-2">
+            {visibleServices.map((service, index) => (
+              <button
+                key={index}
+                className="px-2 py-1 bg-gray-200 text-black rounded text-xs "
+              >
+                {service}
+              </button>
+            ))}
+          </div>
+          {hiddenServices.length > 0 && (
+            <button className="px-2 py-1 bg-gray-200 text-black rounded text-xs mt-2">
+              {`${hiddenServices.length}+ more`}
+            </button>
+          )}
+        </div>
+      )
+    },
+  },
+  {
+    title: 'Verification',
+    dataIndex: 'verification',
+    key: 'verification',
+    render: (verification) => (
+      <span
+        className={`px-2 py-1 rounded ${
+          verification === 'Verified' ? 'bg-green-500' : 'bg-red-500'
+        } text-white`}
+      >
+        {verification}
+      </span>
+    ),
   },
   {
     title: 'User Type',
@@ -173,18 +138,28 @@ const viewProfile = (key) => {
 const disableProfile = (key) => {
   console.log(`Disabling profile with key: ${key}`)
 }
+
 const MaidManagement = () => {
+  const [filteredData, setFilteredData] = useState(data)
+
+  const onSearch = (value) => {
+    const filtered = data.filter((user) =>
+      user.userName.toLowerCase().includes(value.toLowerCase())
+    )
+    setFilteredData(filtered)
+  }
+
   return (
     <div>
       <div className="bg-white flex items-center p-2 justify-between">
         <div className="flex items-center gap-3 ">
           <FaArrowLeft />
-          <p className="text-xl">Client Management</p>
+          <p className="text-xl">Maid Management</p>
         </div>
         <div>
           <Space direction="vertical">
             <Search
-              placeholder="Search for clients"
+              placeholder="Search for Maid"
               allowClear
               onSearch={onSearch}
               style={{
@@ -197,7 +172,7 @@ const MaidManagement = () => {
       <Card bordered={true} style={{ marginTop: 16 }}>
         <Table
           columns={columns}
-          dataSource={data.filter((d) => d.joinAs == 'Maid')}
+          dataSource={filteredData}
           pagination={{
             pageSize: 7,
           }}
